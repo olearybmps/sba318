@@ -4,11 +4,19 @@ require('dotenv').config();
 // Import express
 const express = require('express');
 
+// This middleware parses the request body and makes it available in the req.body property.
+// It supports JSON, URL-encoded, and multipart/form-data requests.
+const bodyParser = require('body-parser');
+
 // Create application object
 const app = express();
 
 // Define port variable from the environment variable
 const port = process.env.PORT || 4000;
+
+// Parsing Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ extended: true }));
 
 // import route files
 const rosterRoutes = require("./routes/teamRoster");
@@ -27,6 +35,11 @@ app.get('/', (req, res) => {
     res.send('Brians World!');
 });
 
+// 404 Middleware
+app.use((req, res) => {
+    res.status(404);
+    res.json({ error: "Resource Not Found" });
+  });
 
 // Server Listener
 app.listen(port, () => {
