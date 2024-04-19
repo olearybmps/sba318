@@ -7,6 +7,9 @@ const express = require('express');
 // This middleware parses the request body and makes it available in the req.body property.
 // It supports JSON, URL-encoded, and multipart/form-data requests.
 const bodyParser = require('body-parser');
+// Custom middleware
+const loggingMiddleware = require('./middleware/loggingMiddleware');
+const validatePlayerMiddleware = require('./middleware/validatePlayerMiddleware');
 
 // Create application object
 const app = express();
@@ -15,6 +18,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 const path = require('path');
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
@@ -27,11 +31,18 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
 
+// Apply logging middleware to all routes
+app.use(loggingMiddleware);
+
 // import route files
 const rosterRoutes = require("./routes/teamRoster");
 const hitStatsRoutes = require("./routes/hittingStats");
 const pitchStatsRoutes = require("./routes/pitchingStats");
 const scheduleRoutes = require('./routes/teamSchedule');
+
+// Apply validation middleware to specific routes
+app.post('/api/roster', validatePlayerMiddleware, rosterRoutes);
+app.patch('/api/roster/:id', validatePlayerMiddleware, rosterRoutes);
 
 // use route files
 app.use('/api/roster', rosterRoutes);
