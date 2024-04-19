@@ -3,27 +3,32 @@ import { teamRoster, teamName } from '../data/teamRoster';
 
 const ViewRoster = () => {
   return (
-    <div>
-      <h2>{teamName} Roster</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Player Name</th>
-            <th>Age</th>
-          </tr>
-        </thead>
-        <tbody>
-          {teamRoster.map((player) => (
-            <tr key={player.id}>
-              <td>{player.id}</td>
-              <td>{player.name}</td>
-              <td>{player.age}</td>
+    <html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="/ViewRoster.css" />
+      </head>
+      <body>
+        <h1>{teamName} Roster</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Player Name</th>
+              <th>Age</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {teamRoster.map((player) => (
+              <tr key={player.id}>
+                <td>{player.id}</td>
+                <td>{player.name}</td>
+                <td>{player.age}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </body>
+    </html>
   );
 };
 

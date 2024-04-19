@@ -14,8 +14,14 @@ const app = express();
 // Define port variable from the environment variable
 const port = process.env.PORT || 4000;
 
+const path = require('path');
+
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
+
+// Static file for CSS
+app.use(express.static('public'));
 
 // Parsing Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,9 +39,9 @@ app.use('/api/hitStats', hitStatsRoutes);
 app.use('/api/pitchStats', pitchStatsRoutes);
 app.use('/api/schedule', scheduleRoutes);
 
-
+// Team roster View
 app.get('/roster', (req, res) => {
-    res.render('viewRoster');
+    res.render('ViewRoster');
 });
 
 // 404 Middleware
