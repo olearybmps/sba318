@@ -2,10 +2,6 @@
 const router = express.Router();
 const { teamRoster } = require('../data/teamRoster');
 
-// router.get('/', (req, res) => {
-//     res.json(teamRoster);
-// });
-
 router
     .route('/')
     .get((req, res) => {
@@ -29,15 +25,27 @@ router
         }
     });
 
-router.get('/:id', function (req, res) {
-    const player = teamRoster.find(function (p) {
-        return p.id == req.params.id;
+router
+    .route('/:id')
+    .get(function (req, res) {
+        const player = teamRoster.find(function (p) {
+            return p.id == req.params.id;
+        });
+        if (player) {
+            res.json(player);
+        } else {
+            res.status(404).json({ message: 'Player not found' });
+        }
+    })
+    .delete((req, res) => {
+        console.log('Delete route called with id:', req.params.id);
+        const playerIndex = teamRoster.findIndex((p) => p.id == req.params.id);
+        if (playerIndex !== -1) {
+            const deletedPlayer = teamRoster.splice(playerIndex, 1)[0];
+            res.json(deletedPlayer);
+        } else {
+            res.status(404).json({ message: 'Player not found' });
+        }
     });
-    if (player) {
-        res.json(player);
-    } else {
-        res.status(404).json({ message: 'Player not found' });
-    }
-});
 
 module.exports = router;
