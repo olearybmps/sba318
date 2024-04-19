@@ -14,6 +14,9 @@ const app = express();
 // Define port variable from the environment variable
 const port = process.env.PORT || 4000;
 
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+
 // Parsing Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
@@ -31,8 +34,8 @@ app.use('/api/pitchStats', pitchStatsRoutes);
 app.use('/api/schedule', scheduleRoutes);
 
 
-app.get('/', (req, res) => {
-    res.send('Brians World!');
+app.get('/roster', (req, res) => {
+    res.render('viewRoster');
 });
 
 // 404 Middleware

@@ -37,6 +37,17 @@ router
             res.status(404).json({ message: 'Player not found' });
         }
     })
+    .patch((req, res) => {
+        const player = teamRoster.find((p) => p.id == req.params.id);
+        if (player) {
+            for (const key in req.body) {
+                player[key] = req.body[key];
+            }
+            res.json(player);
+        } else {
+            res.status(404).json({ message: 'Player not found' });
+        }
+    })
     .delete((req, res) => {
         console.log('Delete route called with id:', req.params.id);
         const playerIndex = teamRoster.findIndex((p) => p.id == req.params.id);

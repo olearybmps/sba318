@@ -46,7 +46,7 @@ const teamRoster = [
     },
 ];
 
-const teamName = 'FireDragons';
+const teamName = 'Fire Dragons';
 
 module.exports = {
     teamRoster,
