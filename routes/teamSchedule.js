@@ -1,13 +1,38 @@
 const express = require('express');
 const router = express.Router();
 const schedule = require('../data/teamSchedule');
-const teamSchedule = require('../data/teamSchedule');
+
+// Filter request by date: /api/schedule?date=04-01
+// Filter request by homeTeam: /api/schedule?homeTeam=Fire Dragons
+// Filter request by awayTeam: /api/schedule?awayTeam=Fire Dragons
+// Filter by combining: /api/schedule?date=04-01&homeTeam=Fire Dragons
 
 router.get('/', (req, res) => {
-    res.json(schedule);
+    const { date, homeTeam, awayTeam } = req.query;
+    let filteredSchedule = schedule;
+
+    if (date) {
+        filteredSchedule = filteredSchedule.filter(
+            (game) => game.date === date
+        );
+    }
+
+    if (homeTeam) {
+        filteredSchedule = filteredSchedule.filter(
+            (game) => game.homeTeam === homeTeam
+        );
+    }
+
+    if (awayTeam) {
+        filteredSchedule = filteredSchedule.filter(
+            (game) => game.awayTeam === awayTeam
+        );
+    }
+
+    res.json(filteredSchedule);
 });
 
-// Get all games
+// Get all games by team
 router.get('/:teamName', function (req, res) {
     const teamName = decodeURIComponent(req.params.teamName);
     const myTeamGames = schedule.filter(function (game) {
@@ -28,7 +53,7 @@ router.get('/:teamName/:homeOrAway', function (req, res) {
     const teamName = decodeURIComponent(req.params.teamName);
     const homeAway = req.params.homeOrAway.toLowerCase();
     const myTeamGames = schedule.filter(function (game) {
-        if (homeAway === 'away'){
+        if (homeAway === 'away') {
             return game.awayTeam === teamName;
         } else {
             return game.homeTeam === teamName;
@@ -43,6 +68,5 @@ router.get('/:teamName/:homeOrAway', function (req, res) {
         });
     }
 });
-
 
 module.exports = router;
