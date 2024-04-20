@@ -60,6 +60,11 @@ app.get('/hittingStats', (req, res) => {
     res.render('ViewHittingStats');
 });
 
+// Team Pitching Statistics View
+app.get('/pitchingStats', (req, res) => {
+    res.render('ViewPitchingStats');
+});
+
 app.get('/addPlayer', (req, res) => {
     res.render('AddPlayerForm');
 });
