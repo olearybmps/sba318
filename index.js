@@ -55,6 +55,10 @@ app.get('/roster', (req, res) => {
     res.render('ViewRoster');
 });
 
+app.get('/addPlayer', (req, res) => {
+    res.render('AddPlayerForm');
+});
+
 // 404 Middleware
 app.use((req, res) => {
     res.status(404);
