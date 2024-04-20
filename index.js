@@ -55,6 +55,11 @@ app.get('/roster', (req, res) => {
     res.render('ViewRoster');
 });
 
+// Team Hitting Statistics View
+app.get('/hittingStats', (req, res) => {
+    res.render('ViewHittingStats');
+});
+
 app.get('/addPlayer', (req, res) => {
     res.render('AddPlayerForm');
 });
