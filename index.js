@@ -65,6 +65,11 @@ app.get('/pitchingStats', (req, res) => {
     res.render('ViewPitchingStats');
 });
 
+// Team Scedule View
+app.get('/schedule', (req, res) => {
+    res.render('ViewSchedule');
+});
+
 app.get('/addPlayer', (req, res) => {
     res.render('AddPlayerForm');
 });
